@@ -1,0 +1,12 @@
+1.	安装后，更新附件的文件，应该能解决有些电脑AmbaUSB不能使用的问题。目前AmbaUSB最多支持3台设备同时烧录。
+	将a12_ddr3.ads 放到 AmbaUSB/share/ambausb-4.0.2/platform/s2l/ads
+	替换AmbaUSB/share/ambausb-4.0.2/platform/s2l/boards/A12_DDR3_NAND.board
+
+2.	如果要更改bld的GPIO设置，请在对应的ads文件中加入GPIO的设置操作。如
+	#Set GPIO19 output 0
+	write 0xe8009000,0x00000000
+	write 0xe8009004,0x00080000
+	write 0xe8009028,0xffffffff
+	write 0xe800902c,0xffffffff
+
+3.	DirectUSB后续不再更新维护

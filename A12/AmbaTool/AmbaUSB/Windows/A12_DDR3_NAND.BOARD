@@ -1,0 +1,5 @@
+[BoardInfo]
+name  = A12.DDR3.NAND
+ads   = a12_ddr3.ads
+bld   = a12_bld_nand.bin
+media = nand
