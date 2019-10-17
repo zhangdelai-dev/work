@@ -1,0 +1,88 @@
+
+#include  <dos.h>
+#include  <stdio.h>
+#include  <stdlib.h>
+#include  <conio.h>
+#include  <string.h>
+#include  <graphics.h>
+#include  <math.h>
+
+
+typedef unsigned char  BYTE;
+typedef unsigned int   WORD;
+
+
+char chartrans(BYTE byte)
+{
+char ch;
+
+    switch (byte)
+    {
+	    case  0:  ch = '0'; break;
+	    case  1:  ch = '1'; break;
+	    case  2:  ch = '2'; break;
+	    case  3:  ch = '3'; break;
+	    case  4:  ch = '4'; break;
+	    case  5:  ch = '5'; break;
+	    case  6:  ch = '6'; break;
+	    case  7:  ch = '7'; break;
+	    case  8:  ch = '8'; break;
+	    case  9:  ch = '9'; break;
+	    case 10:  ch = 'A'; break;
+	    case 11:  ch = 'B'; break;
+	    case 12:  ch = 'C'; break;
+	    case 13:  ch = 'D'; break;
+	    case 14:  ch = 'E'; break;
+	    case 15:  ch = 'F'; break;
+	    default:            break;
+    }
+
+    return ch;
+}
+
+
+void main(void)
+{
+char  filename[15];
+FILE  *jpgfile, *hexfile;
+BYTE  hexh, hexl;
+BYTE  byte;
+int   i;
+
+    printf("Please input filename: ");
+    scanf("%s", filename);
+    for (i = 0; i < 15; i++)
+    {
+	    if (filename[i] == NULL)
+	        break;
+    }
+    // filename[i] = '.';
+    // filename[i + 1] = 'b';
+    // filename[i + 2] = 'm';
+    // filename[i + 3] = 'p';
+    // filename[i + 4] = '\0';
+    jpgfile = fopen(filename, "rb");
+    hexfile = fopen("hex.txt", "w");
+
+    i = 0;
+    while (!feof(jpgfile))
+    {
+	    if ((i % 16) == 0)
+	    {
+	        fprintf(hexfile, "\n");
+	    }
+	    
+	    byte = fgetc(jpgfile);
+	    hexh = chartrans(byte >> 4);
+	    hexl = chartrans(byte & 0x0f);
+	    fprintf(hexfile, "0x%c%c, ", hexh, hexl);
+	    // fprintf(hexfile, "0x%2x, ", byte);
+	    
+	    i++;
+	}
+
+    fprintf(hexfile, "\n");
+
+    fclose(jpgfile);
+    fclose(hexfile);
+}
